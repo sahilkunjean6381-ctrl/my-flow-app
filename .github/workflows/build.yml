@@ -1,0 +1,16 @@
+name: Build APK
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.x'
+      - run: flutter pub get
+      - run: flutter build apk --split-per-abi
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Mera-Flow-App
+          path: build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
